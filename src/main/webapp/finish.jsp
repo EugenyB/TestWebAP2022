@@ -35,31 +35,31 @@
         <h2>${res.fio} - ${res.group}</h2>
         <div id="piechart_3d" style="width: 900px; height: 500px;"></div>
         <h3>Correct: ${res.correct} з ${res.total}</h3>
-        <table style="background-color: black">
-            <thead>
-                <tr>
-                    <th style="background-color: beige">№</th>
-                    <th style="background-color: beige">Answer</th>
-                    <th style="background-color: beige">Correct</th>
-                </tr>
-            </thead>
-            <tbody>
-            <c:forEach var="r" items="${res.result}">
-                <c:choose>
-                    <c:when test="${r.yours==r.correct}">
-                        <tr class="correct">
-                    </c:when>
-                    <c:otherwise>
-                        <tr class="wrong">
-                    </c:otherwise>
-                </c:choose>
-                    <td>${r.n+1}</td>
-                    <td>${r.yours+1}</td>
-                    <td>${r.correct+1}</td>
-                </tr>                
-            </c:forEach>
-            </tbody>
-        </table>
+<%--        <table style="background-color: black">--%>
+<%--            <thead>--%>
+<%--                <tr>--%>
+<%--                    <th style="background-color: beige">№</th>--%>
+<%--                    <th style="background-color: beige">Answer</th>--%>
+<%--                    <th style="background-color: beige">Correct</th>--%>
+<%--                </tr>--%>
+<%--            </thead>--%>
+<%--            <tbody>--%>
+<%--            <c:forEach var="r" items="${res.result}">--%>
+<%--                <c:choose>--%>
+<%--                    <c:when test="${r.yours==r.correct}">--%>
+<%--                        <tr class="correct">--%>
+<%--                    </c:when>--%>
+<%--                    <c:otherwise>--%>
+<%--                        <tr class="wrong">--%>
+<%--                    </c:otherwise>--%>
+<%--                </c:choose>--%>
+<%--                    <td>${r.n+1}</td>--%>
+<%--                    <td>${r.yours+1}</td>--%>
+<%--                    <td>${r.correct+1}</td>--%>
+<%--                </tr>                --%>
+<%--            </c:forEach>--%>
+<%--            </tbody>--%>
+<%--        </table>--%>
         
     </body>
 </html>

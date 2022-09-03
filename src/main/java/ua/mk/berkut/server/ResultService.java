@@ -21,7 +21,7 @@ public class ResultService {
         Timestamp starttime = Timestamp.valueOf(result.getStartTime());
         Timestamp finishtime = Timestamp.valueOf(result.getFinishTime());
         try(Connection con = ds.getConnection()) {
-            PreparedStatement ps = con.prepareStatement("insert into RESULT (fio, ngr, correct, wrong, starttime, finishtime) VALUES (?,?,?,?,?,?)");
+            PreparedStatement ps = con.prepareStatement("insert into RESULT_TEST (fio, ngr, correct, wrong, starttime, finishtime) VALUES (?,?,?,?,?,?)");
             ps.setString(1, fio);
             ps.setString(2, ngr);
             ps.setInt(3, correct);

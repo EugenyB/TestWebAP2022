@@ -2,7 +2,10 @@
 package ua.mk.berkut.server;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  *
@@ -52,6 +55,20 @@ public class Question implements Serializable {
         this.question = question;
     }
 
+
+    public void shuffle() {
+        answers[correct] = "+" + answers[correct];
+        List<String> ans = new ArrayList<>(Arrays.asList(answers));
+        Collections.shuffle(ans);
+        for (int i=0; i < answers.length; i++) {
+            String s = ans.get(i);
+            if (s.charAt(0)=='+') {
+                correct = i;
+                s = s.substring(1);
+            }
+            answers[i] = s;
+        }
+    }
 
     @Override
     public String toString() {

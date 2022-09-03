@@ -19,12 +19,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Stream;
 
 @WebServlet(name = "StartTestServlet", urlPatterns = {"/teststart", "/testrun", "/testfinish", "/sendanswer"})
 public class StartTestServlet extends javax.servlet.http.HttpServlet {
 
 //    public static final String FILENAME = "qrus.txt";
-    public static final int NUM_OF_QUESTIONS = 15;
+    public static final int NUM_OF_QUESTIONS = 50;
     
     private List<Question> questionsList;
     private String dirimages;
@@ -40,10 +41,12 @@ public class StartTestServlet extends javax.servlet.http.HttpServlet {
         if (ds!=null) {
             service = new ResultService(ds);
         }
-        questionsList = readBlock(getServletContext().getInitParameter("filename"));
+        String filenames = getServletContext().getInitParameter("filename");
+        int numOfBlocks = Integer.parseInt(getServletContext().getInitParameter("numofblocks"));
+        //int[] questions = Stream.of(getServletContext().getInitParameter("questionsbyblocks").split(" ")).mapToInt(Integer::parseInt).toArray();
+        questionsList = readBlocks(filenames,numOfBlocks);
         dirimages = getServletContext().getInitParameter("dirimages");
     }
-    
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException {
         processRequest(request, response);
@@ -102,9 +105,10 @@ public class StartTestServlet extends javax.servlet.http.HttpServlet {
     }
 
     private boolean timeIsOver(HttpSession session) {
-        LocalDateTime starttime = (LocalDateTime) session.getAttribute("starttime");
-        LocalDateTime now = LocalDateTime.now();
-        return starttime.plusMinutes(7).plusSeconds(30).isBefore(now);
+//        LocalDateTime starttime = (LocalDateTime) session.getAttribute("starttime");
+//        LocalDateTime now = LocalDateTime.now();
+//        return starttime.plusMinutes(7).plusSeconds(30).isBefore(now);
+        return false;
     }
 
     private void processCurrentAnswer(HttpServletRequest request, HttpSession session, int current) throws IOException {
@@ -195,9 +199,18 @@ public class StartTestServlet extends javax.servlet.http.HttpServlet {
     }
 
     private List<Question> createTest() {
+        int[] questions = Stream.of(getServletContext().getInitParameter("questionsbyblocks").split(" ")).mapToInt(Integer::parseInt).toArray();
+        // 10 10 15 15
         List<Question> result = new ArrayList<>(questionsList);
-        Collections.shuffle(result);
-        return result.subList(0, NUM_OF_QUESTIONS);
+        List<Question> selected = new ArrayList<>();
+        for (int i = 0; i < 4; i++) {
+            Collections.shuffle(result.subList(NUM_OF_QUESTIONS*i, NUM_OF_QUESTIONS*(i+1)));
+            selected.addAll(result.subList(NUM_OF_QUESTIONS * i, NUM_OF_QUESTIONS * i + questions[i]));
+        }
+        for (Question question : selected) {
+            question.shuffle();
+        }
+        return selected.subList(0, NUM_OF_QUESTIONS);
     }
 
 
@@ -232,6 +245,15 @@ public class StartTestServlet extends javax.servlet.http.HttpServlet {
             Logger.getLogger(StartTestServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
         return block;
+    }
+
+    private List<Question> readBlocks(String filenames, int numOfBlocks) {
+        List<Question> result = new ArrayList<>();
+        for (int i = 1; i <= numOfBlocks; i++) {
+            String filename = filenames.replace('_', (char) ('0' + i));
+            result.addAll(readBlock(filename));
+        }
+        return result;
     }
 
 }

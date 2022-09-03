@@ -12,9 +12,9 @@
     <title>Testing</title>
   </head>
   <body>
-  <h1>Testing for GFL QA automation Java courses</h1>
-  <h2>Test contains 15 questions</h2>
-  <h3>Duration: 7 minutes 30 seconds</h3>
+  <h1>Testing training</h1>
+  <h2>Test contains 50 questions</h2>
+  <h3>Duration: unlimited</h3>
   <div>
     <form action="teststart" method="POST">
       <table>
@@ -22,7 +22,7 @@
           <td><label for="name">Your name</label></td> <td><input id="name" type="text" name="fio" value="" required/></td>
         </tr>
         <tr>
-          <td><label for="group">email</label></td> <td> <input id="group" type="text" name="group" value="" /></td>
+          <td><label for="group">Your group</label></td> <td> <input id="group" type="text" name="group" value="" /></td>
         </tr>
         <tr>
           <td colspan="2"><button class="accept" type="submit" value="Start" >Start</button></td>

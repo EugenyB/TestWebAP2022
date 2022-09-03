@@ -7,11 +7,18 @@
 
     <context-param>
         <param-name>filename</param-name>
-        <param-value>http://www.berkut.mk.ua/download/test/q_ukr.txt</param-value>
+        <param-value>http://www.berkut.mk.ua/download/test/q_.txt</param-value>
     </context-param>
     <context-param>
         <param-name>dirimages</param-name>
         <param-value>http://berkut.mk.ua/download/test/img/</param-value>
     </context-param>
-
+    <context-param>
+        <param-name>numofblocks</param-name>
+        <param-value>4</param-value>
+    </context-param>
+    <context-param>
+        <param-name>questionsbyblocks</param-name>
+        <param-value>10 10 15 15</param-value>
+    </context-param>
 </web-app>
